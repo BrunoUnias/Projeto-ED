@@ -1,0 +1,199 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define TAM 20
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+typedef struct Aluno{
+	char aluno[TAM];
+	struct Aluno *prox;
+	
+}Aluno;
+
+//fila
+
+Aluno *insereAluno(Aluno *a,char aluno[]){
+    Aluno *novo = (Aluno *)malloc(sizeof(Aluno));
+    int i;
+    for(i=0;i<=TAM;i++){
+        novo->aluno[i] = aluno[i];
+    }
+    novo->aluno[TAM] = '\0';
+    novo->prox = a;
+    return novo;
+    
+}
+
+void imprime(Aluno *lista){
+    int i;
+    
+    selectionSort(lista,TAM);
+    printf("---lista não ordenada---");
+    if(lista != NULL){
+        printf("%s\n",lista->aluno);
+        
+    }
+    printf("---lista ordenada---");
+    if(lista != NULL){
+        for(i = 0;i <=TAM; i++){
+            printf(" %s",lista);
+        }
+    }
+    
+}
+
+//SelectionSort
+
+void swap(int *px,int *y){
+	int temp = *px;
+	*px = *y;
+	*y = temp;
+}
+
+Aluno* selectionSort(Aluno* lista) 
+{ 
+    Aluno *a, *b, *c, *d, *r; 
+  
+    a = b = lista; 
+  
+    // While b is not the last node 
+    while (b->prox) { 
+  
+        c = d = b->prox; 
+  
+        // While d is pointing to a valid node 
+        while (d) { 
+  
+            if (b->aluno > d->aluno) { 
+  
+                // If d appears immediately after b 
+                if (b->prox == d) { 
+  
+                    // Case 1: b is the head of the linked list 
+                    if (b == lista) { 
+  
+                        // Move d before b 
+                        b->prox = d->prox; 
+                        d->prox = b; 
+  
+                        // Swap b and d pointers 
+                        r = b; 
+                        b = d; 
+                        d = r; 
+  
+                        c = d; 
+  
+                        // Update the head 
+                        lista = b; 
+  
+                        // Skip to the next element 
+                        // as it is already in order 
+                        d = d->prox; 
+                    } 
+  
+                    // Case 2: b is not the head of the linked list 
+                    else { 
+  
+                        // Move d before b 
+                        b->prox = d->prox; 
+                        d->prox = b; 
+                        a->prox = d; 
+  
+                        // Swap b and d pointers 
+                        r = b; 
+                        b = d; 
+                        d = r; 
+  
+                        c = d; 
+  
+                        // Skip to the next element 
+                        // as it is already in order 
+                        d = d->prox; 
+                    } 
+                } 
+  
+                // If b and d have some non-zero 
+                // number of nodes in between them 
+                else { 
+  
+                    // Case 3: b is the head of the linked list 
+                    if (b == lista) { 
+  
+                        // Swap b->next and d->next 
+                        r = b->prox; 
+                        b->prox = d->prox; 
+                        d->prox = r; 
+                        c->prox = b; 
+  
+                        // Swap b and d pointers 
+                        r = b; 
+                        b = d; 
+                        d = r; 
+  
+                        c = d; 
+  
+                        // Skip to the next element 
+                        // as it is already in order 
+                        d = d->prox; 
+  
+                        // Update the head 
+                        lista = b; 
+                    } 
+  
+                    // Case 4: b is not the head of the linked list 
+                    else { 
+  
+                        // Swap b->next and d->next 
+                        r = b->next; 
+                        b->prox = d->prox; 
+                        d->prox = r; 
+                        c->prox = b; 
+                        a->prox = d; 
+  
+                        // Swap b and d pointers 
+                        r = b; 
+                        b = d; 
+                        d = r; 
+  
+                        c = d; 
+  
+                        // Skip to the next element 
+                        // as it is already in order 
+                        d = d->prox; 
+                    } 
+                } 
+            } 
+            else { 
+  
+                // Update c and skip to the next element 
+                // as it is already in order 
+                c = d; 
+                d = d->prox; 
+            } 
+        } 
+  
+        a = b; 
+        b = b->prox; 
+    } 
+  
+    return lista; 
+} 
+  
+// Function to print the list 
+void printLista(Aluno* lista) 
+{ 
+    while (lista) { 
+        lista = lista->prox; 
+    } 
+} 
+  
+
+//função principal
+
+int main() {
+    Aluno *pq;
+	char nome;
+	
+	receberAluno(nome,pq);
+	return 0;
+}
